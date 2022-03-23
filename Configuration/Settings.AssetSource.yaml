@@ -1,0 +1,9 @@
+#Neos:
+#  Media:
+#    assetSources:
+#      3qvideo:
+#        assetSource: 'Sitegeist\AssetSource\ThreeQVideo\AssetSource\ThreeQVideoAssetSource'
+#        assetSourceOptions:
+#          asyncThumbnails: true
+#          apiKey: null
+#          projectId: null
