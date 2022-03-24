@@ -1,0 +1,31 @@
+'Sitegeist.AssetSource.3QVideo:VideoPlayer':
+#  abstract: true
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: "3Q Video Player"
+    inspector:
+      groups:
+        3qvideo:
+          label: "Video"
+          icon: icon-rss
+  properties:
+    playoutId:
+      type: string
+      ui:
+        label: "Playout id"
+        reloadPageIfChanged: true
+        inspector:
+          group: 3qvideo
+    file:
+      type: 'Neos\Media\Domain\Model\Asset'
+
+      ui:
+        label: '3Q Video'
+        inspector:
+          group: 3qvideo
+          editorOptions:
+            constraints:
+              assetSources: ['3qvideo']
+            features:
+              upload: false

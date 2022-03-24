@@ -1,0 +1,55 @@
+prototype(Sitegeist.AssetSource.3QVideo:VideoPlayer) < prototype(Neos.Fusion:Component) {
+  class = null
+
+  playoutId = null
+  muted = true
+  autoplay = false
+  loop = false
+  controls = true
+  file = ${q(node).property('file')}
+  renderer = Neos.Fusion:Component {
+
+    @context.randomVideoId = ${'3qplayer_' + Math.randomInt(100000000,999999999)}
+    class = ${props.class}
+    configuration = Neos.Fusion:DataStructure {
+      dataid = ${props.playoutId}
+      container = ${randomVideoId}
+
+      muted = ${props.muted}
+      autoplay = ${props.autoplay}
+      loop = ${props.loop}
+      controls = ${props.controls}
+
+      width = '100%'
+      height = '100%'
+      layout = 'fixed'
+
+      // Styles has to be written in this style without semicolon (;)
+            // More info about the classes and possibillities:
+            // https://docs.3q.video/en/Player_API/Custom_Player_Templates.html
+            css = '
+                .sdn-display {z-index: 0}
+                .sdn-source-element {object-fit: cover}
+            '
+
+      controlBarAutoHide = true
+      allowmutedautoplay = true
+
+      tintColor = 'var(--color-brand-rot)'
+    }
+
+    renderer = afx`
+      <div class={[styles.videoPlayer, props.class]}>
+        Hello {props.file}
+        <script
+          type="text/javascript"
+          src="https://player.3qsdn.com/js3q.latest.js">
+        </script>
+        <div id={randomVideoId}></div>
+        <script type="text/javascript">
+          var js3qVideoPlayer = new js3q({Json.stringify(props.configuration)});
+        </script>
+      </div>
+    `
+  }
+}
