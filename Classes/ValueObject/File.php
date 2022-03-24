@@ -43,7 +43,7 @@ class File
         $metadata = $result['Metadata'];
         return new self(
             (int)$result['Id'],
-            $metadata['OriginalFileName'],
+            $metadata['Title'],
             (int) $result['Properties']['Size'],
             $url,
             new Uri($metadata['StandardFilePicture']['URI']),

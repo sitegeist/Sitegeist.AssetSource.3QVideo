@@ -41,22 +41,25 @@ class ThreeQVideoAssetProxyRepository implements AssetProxyRepositoryInterface
 
     public function findBySearchTerm(string $searchTerm): AssetProxyQueryResultInterface
     {
-        // TODO: Implement findBySearchTerm() method.
+        $query = new ThreeQVideoAssetProxyQuery($this->assetSource);
+        $query->setSearchTerm($searchTerm);
+        return new ThreeQVideoAssetProxyQueryResult($query);
     }
 
     public function findByTag(Tag $tag): AssetProxyQueryResultInterface
     {
-        // TODO: Implement findByTag() method.
+        throw new \BadMethodCallException('findByTag is not supported by this repository', 1648042293);
     }
 
     public function findUntagged(): AssetProxyQueryResultInterface
     {
-        // TODO: Implement findUntagged() method.
+        throw new \BadMethodCallException('findByTag is not supported by this repository', 1648042305);
     }
 
     public function countAll(): int
     {
-        // TODO: Implement countAll() method.
+        $query = new ThreeQVideoAssetProxyQuery($this->assetSource);
+        return $query->count();
     }
 
 }

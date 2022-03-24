@@ -28,9 +28,14 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
         return new self(array_values($files));
     }
 
-    public static function empty():self
+    public static function empty(): self
     {
         return new self([]);
+    }
+
+    public static function fromArray(array $files): self
+    {
+        return new self(array_values($files));
     }
 
     public function count(): int

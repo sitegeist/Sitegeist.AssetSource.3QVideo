@@ -5,6 +5,7 @@ namespace Sitegeist\AssetSource\ThreeQVideo\AssetSource;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxyQueryResultInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceConnectionExceptionInterface;
+use Sitegeist\AssetSource\ThreeQVideo\ValueObject\File;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\FileList;
 
 class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
@@ -60,7 +61,12 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
     public function getFileList(): FileList
     {
         if ($this->fileList === null) {
-            $this->fileList = $this->assetSource->getApiClient()->files();
+            $files = $this->assetSource->getApiClient()->files();
+            if ($this->searchTerm !== '') {
+                $files = FileList::fromArray(array_filter($files->toArray(), fn(File $file) => stripos(strtolower($file->filename), strtolower($this->searchTerm)) !== false));
+            }
+
+            $this->fileList = $files;
         }
         return $this->fileList;
     }
