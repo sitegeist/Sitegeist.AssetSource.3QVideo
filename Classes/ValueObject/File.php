@@ -10,7 +10,7 @@ use Psr\Http\Message\UriInterface;
 /**
  * @Flow\Proxy(false)
  */
-class File
+class File implements \JsonSerializable
 {
     public int $id;
     public string $filename;
@@ -53,6 +53,13 @@ class File
             new \DateTimeImmutable((string)$result['CreatedAt']),
             new \DateTimeImmutable((string)$result['LastUpdateAt'])
         );
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->id
+        ];
     }
 
 

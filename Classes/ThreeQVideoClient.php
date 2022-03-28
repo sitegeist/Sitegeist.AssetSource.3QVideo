@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\File;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\FileList;
-use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Files;
+use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 
 class ThreeQVideoClient
 {
@@ -43,6 +43,24 @@ class ThreeQVideoClient
         } catch (GuzzleException $exception) {
             $this->logger->error(
                 sprintf('Error querying file %s for 3Q project %s', $id, $this->projectId),
+                [$exception->getMessage()]
+            );
+            return null;
+        }
+    }
+
+    public function playouts(int $file): ?Playouts
+    {
+        try {
+            $response = $this->getClient()->get(
+                sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files/%s/playouts', $this->projectId, $file->id)
+            );
+            $file = \GuzzleHttp\Utils::jsonDecode($response->getBody()->getContents(), true);
+
+            return Playouts::fromApiResult($file);
+        } catch (GuzzleException $exception) {
+            $this->logger->error(
+                sprintf('Error querying playouts for file %s for 3Q project %s', $file->id, $this->projectId),
                 [$exception->getMessage()]
             );
             return null;

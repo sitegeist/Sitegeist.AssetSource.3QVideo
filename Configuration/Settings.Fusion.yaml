@@ -1,0 +1,5 @@
+Neos:
+  Fusion:
+    defaultContext:
+      Asset: 'Sitegeist\AssetSource\ThreeQVideo\Helper\AssetHelper'
+      ThreeQ.Video: 'Sitegeist\AssetSource\ThreeQVideo\Helper\ThreeQHelper'

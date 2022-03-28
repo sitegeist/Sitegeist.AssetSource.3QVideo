@@ -83,7 +83,7 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
     public function getImportStream()
     {
         $handle = fopen('php://memory', 'r+');
-        fwrite($handle, serialize($this->file));
+        fwrite($handle, json_encode($this->file));
         rewind($handle);
         return $handle;
     }
