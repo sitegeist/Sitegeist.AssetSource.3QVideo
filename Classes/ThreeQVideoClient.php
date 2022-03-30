@@ -37,7 +37,7 @@ class ThreeQVideoClient
             $response = $this->getClient()->get(
                 sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files/%s', $this->projectId, $id)
             );
-            $file = \GuzzleHttp\Utils::jsonDecode($response->getBody()->getContents(), true);
+            $file = json_decode($response->getBody()->getContents(), true);
 
             return File::fromApiResult($file);
         } catch (GuzzleException $exception) {
@@ -55,7 +55,7 @@ class ThreeQVideoClient
             $response = $this->getClient()->get(
                 sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files/%s/playouts', $this->projectId, $file)
             );
-            $file = \GuzzleHttp\Utils::jsonDecode($response->getBody()->getContents(), true);
+            $file = json_decode($response->getBody()->getContents(), true);
 
             return Playouts::fromApiResult($file);
         } catch (GuzzleException $exception) {
@@ -73,7 +73,7 @@ class ThreeQVideoClient
             $response = $this->getClient()->get(
                 sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files?IncludeMetadata=true&IncludeProperties=true', $this->projectId)
             );
-            $result = \GuzzleHttp\Utils::jsonDecode($response->getBody()->getContents(), true);
+            $result = json_decode($response->getBody()->getContents(), true);
 
             return FileList::fromApiResult($result);
         } catch (GuzzleException $exception) {
