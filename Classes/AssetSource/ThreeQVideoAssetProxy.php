@@ -108,8 +108,7 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
 
     public function isImported(): bool
     {
-        $importedAsset = (new ImportedAssetRepository())->findOneByAssetSourceIdentifierAndRemoteAssetIdentifier($this->assetSource->getIdentifier(), $this->getIdentifier());
-        return ($importedAsset instanceof ImportedAsset);
+        return $this->getLocalAssetIdentifier() !== null;
     }
 
 
