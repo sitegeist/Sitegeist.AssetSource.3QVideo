@@ -10,6 +10,8 @@ use Neos\Media\Domain\Model\ImportedAsset;
 use Neos\Media\Domain\Repository\ImportedAssetRepository;
 use Psr\Http\Message\UriInterface;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\File;
+use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playout;
+use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 
 final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface
 {
@@ -83,9 +85,17 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
     public function getImportStream()
     {
         $handle = fopen('php://memory', 'r+');
-        fwrite($handle, json_encode($this->file));
+        fwrite($handle, json_encode([
+            'id' => $this->file->id,
+            'playoutId' => $this->getPlayouts()->first()->id
+        ]));
         rewind($handle);
         return $handle;
+    }
+
+    public function getPlayouts(): Playouts
+    {
+        return $this->assetSource->getApiClient()->playouts($this->file->id);
     }
 
     public function getLocalAssetIdentifier(): ?string

@@ -12,10 +12,10 @@ use Psr\Http\Message\UriInterface;
  */
 class Playout implements \JsonSerializable
 {
-    public int $id;
+    public string $id;
     public string $label;
 
-    private function __construct(int $id, string $label)
+    private function __construct(string $id, string $label)
     {
         $this->id = $id;
         $this->label = $label;
@@ -24,7 +24,7 @@ class Playout implements \JsonSerializable
     public static function fromApiResult(array $result): self
     {
         return new self(
-            (int)$result['Id'],
+            (string) $result['Id'],
             (string) $result['Label']
         );
     }

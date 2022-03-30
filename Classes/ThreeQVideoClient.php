@@ -53,7 +53,7 @@ class ThreeQVideoClient
     {
         try {
             $response = $this->getClient()->get(
-                sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files/%s/playouts', $this->projectId, $file->id)
+                sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files/%s/playouts', $this->projectId, $file)
             );
             $file = \GuzzleHttp\Utils::jsonDecode($response->getBody()->getContents(), true);
 
