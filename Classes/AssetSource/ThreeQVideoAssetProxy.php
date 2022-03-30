@@ -5,6 +5,7 @@ namespace Sitegeist\AssetSource\ThreeQVideo\AssetSource;
 use Neos\Flow\Annotations as Flow;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\HasRemoteOriginalInterface;
+use Neos\Media\Domain\Model\AssetSource\AssetProxy\SupportsIptcMetadataInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceInterface;
 use Neos\Media\Domain\Model\ImportedAsset;
 use Neos\Media\Domain\Repository\ImportedAssetRepository;
@@ -13,17 +14,29 @@ use Sitegeist\AssetSource\ThreeQVideo\ValueObject\File;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playout;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 
-final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface
+final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface, SupportsIptcMetadataInterface
 {
 
     private ThreeQVideoAssetSource $assetSource;
     private File $file;
+    private array $iptcProperties = [];
     private ?string $localAssetIdentifier = null;
 
-    public function __construct(ThreeQVideoAssetSource $assetSource, File $file)
+    protected function __construct(File $file, ThreeQVideoAssetSource $assetSource)
     {
-        $this->assetSource = $assetSource;
         $this->file = $file;
+        $this->assetSource = $assetSource;
+    }
+
+    public static function fromFile(File $file, ThreeQVideoAssetSource $assetSource): self
+    {
+        $assetProxy = new self($file, $assetSource);
+
+        $assetProxy->iptcProperties['Title'] = $file->metadata['Title'] ?? '';
+        $assetProxy->iptcProperties['CaptionAbstract'] = $file->metadata['Description'] ?? '';
+        $assetProxy->iptcProperties['CopyrightNotice'] = $file->metadata['Licensor'] ?? '';
+
+        return $assetProxy;
     }
 
 
@@ -111,5 +124,18 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
         return $this->getLocalAssetIdentifier() !== null;
     }
 
+    public function hasIptcProperty(string $propertyName): bool
+    {
+        return isset($this->iptcProperties[$propertyName]);
+    }
 
+    public function getIptcProperty(string $propertyName): string
+    {
+        return $this->iptcProperties[$propertyName];
+    }
+
+    public function getIptcProperties(): array
+    {
+        return $this->iptcProperties;
+    }
 }

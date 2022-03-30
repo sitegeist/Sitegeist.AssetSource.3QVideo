@@ -37,12 +37,12 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
     {
         $files = $this->getFiles()->toArray();
         $firstFile =  reset($files);
-        return $firstFile !== false ? new ThreeQVideoAssetProxy($this->query->getAssetSource(), $firstFile) : null;
+        return $firstFile !== false ? ThreeQVideoAssetProxy::fromFile($firstFile, $this->query->getAssetSource()) : null;
     }
 
     public function toArray(): array
     {
-        return array_map(fn(File $file) => new ThreeQVideoAssetProxy($this->query->getAssetSource(), $file), $this->getFiles()->toArray());
+        return array_map(fn(File $file) => ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource()), $this->getFiles()->toArray());
     }
 
     public function current(): mixed
@@ -52,7 +52,7 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
         if ($file === null) {
             return null;
         }
-        return new ThreeQVideoAssetProxy($this->query->getAssetSource(), $file);
+        return ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource());
     }
 
     public function next(): void
@@ -83,7 +83,7 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
     public function offsetGet(mixed $offset): ?ThreeQVideoAssetProxy
     {
         $file = $this->getFiles()->offsetGet($offset);
-        return $file !== null ? new ThreeQVideoAssetProxy($this->query->getAssetSource(), $file) : null;
+        return $file !== null ? ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource()) : null;
     }
 
     public function offsetSet(mixed $offset, mixed $value): void

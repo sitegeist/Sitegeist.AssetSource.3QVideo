@@ -63,7 +63,7 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
         if ($this->fileList === null) {
             $files = $this->assetSource->getApiClient()->files();
             if ($this->searchTerm !== '') {
-                $files = FileList::fromArray(array_filter($files->toArray(), fn(File $file) => stripos(strtolower($file->filename), strtolower($this->searchTerm)) !== false));
+                $files = FileList::fromArray(array_filter($files->toArray(), fn(File $file) => stripos(strtolower($file->metadata['Title']), strtolower($this->searchTerm)) !== false));
             }
 
             $this->fileList = $files;

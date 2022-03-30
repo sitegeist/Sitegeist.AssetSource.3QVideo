@@ -25,7 +25,7 @@ class ThreeQVideoAssetProxyRepository implements AssetProxyRepositoryInterface
     public function getAssetProxy(string $identifier): AssetProxyInterface
     {
         $file = $this->assetSource->getApiClient()->file((int) $identifier);
-        return new ThreeQVideoAssetProxy($this->assetSource, $file);
+        return ThreeQVideoAssetProxy::fromFile($file, $this->assetSource);
     }
 
     public function filterByType(AssetTypeFilter $assetType = null): void

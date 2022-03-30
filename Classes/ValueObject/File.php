@@ -43,7 +43,7 @@ class File implements \JsonSerializable
         $metadata = $result['Metadata'];
         return new self(
             (int)$result['Id'],
-            $metadata['Title'],
+            $metadata['OriginalFileName'],
             (int) $result['Properties']['Size'],
             $url,
             new Uri($metadata['StandardFilePicture']['URI']),
