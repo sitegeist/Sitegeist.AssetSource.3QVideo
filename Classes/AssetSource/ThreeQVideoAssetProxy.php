@@ -7,11 +7,8 @@ use Neos\Media\Domain\Model\AssetSource\AssetProxy\AssetProxyInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\HasRemoteOriginalInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetProxy\SupportsIptcMetadataInterface;
 use Neos\Media\Domain\Model\AssetSource\AssetSourceInterface;
-use Neos\Media\Domain\Model\ImportedAsset;
-use Neos\Media\Domain\Repository\ImportedAssetRepository;
 use Psr\Http\Message\UriInterface;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\File;
-use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playout;
 use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 
 final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface, SupportsIptcMetadataInterface
