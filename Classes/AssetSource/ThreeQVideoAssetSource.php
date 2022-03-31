@@ -18,10 +18,25 @@ class ThreeQVideoAssetSource implements AssetSourceInterface
      */
     protected $resourceManager;
 
-    private string $identifier;
-    protected array $options = [];
-    protected string $label;
-    protected string $description;
+    /**
+     * @var string
+     */
+    private $identifier;
+
+    /**
+     * @var array
+     */
+    protected $options = [];
+
+    /**
+     * @var string
+     */
+    protected $label;
+
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
      * @var AssetProxyRepositoryInterface

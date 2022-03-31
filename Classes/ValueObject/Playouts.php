@@ -10,7 +10,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Playouts
 {
-    protected array $playouts = [];
+
+    /**
+     * @var array
+     */
+    protected $playouts = [];
 
     protected function __construct(array $playouts)
     {
@@ -19,7 +23,12 @@ class Playouts
 
     public static function fromApiResult(array $result): self
     {
-        $playouts = array_map(static fn(array $file) => Playout::fromApiResult($file), $result['FilePlayouts']);
+        $playouts = array_map(
+            function(array $file) {
+                return Playout::fromApiResult($file);
+            },
+            $result['FilePlayouts']
+        );
         return new self(array_values($playouts));
     }
 

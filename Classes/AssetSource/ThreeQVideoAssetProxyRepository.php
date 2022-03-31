@@ -14,7 +14,10 @@ use Neos\Media\Domain\Model\Tag;
 class ThreeQVideoAssetProxyRepository implements AssetProxyRepositoryInterface
 {
 
-    protected ThreeQVideoAssetSource $assetSource;
+    /**
+     * @var ThreeQVideoAssetSource
+     */
+    protected $assetSource;
 
     public function __construct(ThreeQVideoAssetSource $assetSource)
     {

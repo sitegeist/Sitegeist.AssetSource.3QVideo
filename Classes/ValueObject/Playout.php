@@ -12,8 +12,15 @@ use Psr\Http\Message\UriInterface;
  */
 class Playout implements \JsonSerializable
 {
-    public string $id;
-    public string $label;
+    /**
+     * @var string
+     */
+    public $id;
+
+    /**
+     * @var string
+     */
+    public $label;
 
     private function __construct(string $id, string $label)
     {

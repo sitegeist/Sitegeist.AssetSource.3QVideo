@@ -10,13 +10,35 @@ use Sitegeist\AssetSource\ThreeQVideo\ValueObject\FileList;
 
 class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
 {
-    protected ThreeQVideoAssetSource $assetSource;
-    private int $limit = 20;
-    private int $offset = 0;
-    private string $searchTerm = '';
-    private array $orderings = [];
+    /**
+     * @var ThreeQVideoAssetSource
+     */
+    protected $assetSource;
 
-    private ?FileList $fileList = null;
+    /**
+     * @var int
+     */
+    private $limit = 20;
+
+    /**
+     * @var int
+     */
+    private $offset = 0;
+
+    /**
+     * @var string
+     */
+    private $searchTerm = '';
+
+    /**
+     * @var array
+     */
+    private $orderings = [];
+
+    /**
+     * @var FileList|null
+     */
+    private $fileList = null;
 
     public function __construct(ThreeQVideoAssetSource $assetSource)
     {
@@ -63,9 +85,15 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
         if ($this->fileList === null) {
             $files = $this->assetSource->getApiClient()->files();
             if ($this->searchTerm !== '') {
-                $files = FileList::fromArray(array_filter($files->toArray(), fn(File $file) => stripos(strtolower($file->metadata['Title']), strtolower($this->searchTerm)) !== false));
+                $files = FileList::fromArray(
+                    array_filter(
+                        $files->toArray(),
+                        function(File $file) {
+                            return stripos(strtolower($file->metadata['Title']), strtolower($this->searchTerm)) !== false;
+                        }
+                    )
+                );
             }
-
             $this->fileList = $files;
         }
         return $this->fileList;

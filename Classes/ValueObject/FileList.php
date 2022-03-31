@@ -12,9 +12,17 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
     /**
      * @var array<File>
      */
-    private array $files = [];
-    private int $count = 0;
-    private int $position = 0;
+    private $files = [];
+
+    /**
+     * @var int
+     */
+    private $count = 0;
+
+    /**
+     * @var int
+     */
+    private $position = 0;
 
     public function __construct(array $files)
     {
@@ -24,7 +32,12 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
 
     public static function fromApiResult(array $result): self
     {
-        $files = array_map(static fn(array $file) => File::fromApiResult($file), $result['Files']);
+        $files = array_map(
+            function(array $file) {
+                return File::fromApiResult($file);
+            },
+            $result['Files']
+        );
         return new self(array_values($files));
     }
 

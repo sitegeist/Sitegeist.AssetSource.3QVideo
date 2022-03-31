@@ -1,4 +1,4 @@
 Neos:
   Fusion:
     defaultContext:
-      Asset: 'Sitegeist\AssetSource\ThreeQVideo\Helper\AssetHelper'
+      ThreeQVideo: 'Sitegeist\AssetSource\ThreeQVideo\Helper\ThreeQVideoHelper'

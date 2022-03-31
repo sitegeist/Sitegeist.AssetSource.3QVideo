@@ -1,5 +1,5 @@
-'Sitegeist.AssetSource.3QVideo:VideoPlayer':
-#  abstract: true
+'Sitegeist.AssetSource.3QVideo:3QVideo':
+  abstract: true
   superTypes:
     'Neos.Neos:Content': true
   ui:
@@ -10,16 +10,8 @@
           label: "Video"
           icon: icon-rss
   properties:
-    playoutId:
-      type: string
-      ui:
-        label: "Playout id"
-        reloadPageIfChanged: true
-        inspector:
-          group: 3qvideo
-    file:
+    3qvideo:
       type: 'Neos\Media\Domain\Model\Asset'
-
       ui:
         label: '3Q Video'
         inspector:

@@ -11,8 +11,15 @@ use Sitegeist\AssetSource\ThreeQVideo\ValueObject\FileList;
 class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
 {
 
-    protected ThreeQVideoAssetProxyQuery $query;
-    protected ?FileList $fileListRuntimeCache = null;
+    /**
+     * @var ThreeQVideoAssetProxyQuery
+     */
+    protected $query;
+
+    /**
+     * @var FileList|null
+     */
+    protected $fileListRuntimeCache = null;
 
     public function __construct(ThreeQVideoAssetProxyQuery $query)
     {
@@ -42,10 +49,15 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
 
     public function toArray(): array
     {
-        return array_map(fn(File $file) => ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource()), $this->getFiles()->toArray());
+        return array_map(
+            function(File $file) {
+                return ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource());
+                },
+            $this->getFiles()->toArray()
+        );
     }
 
-    public function current(): mixed
+    public function current(): ?ThreeQVideoAssetProxy
     {
         $files = $this->getFiles();
         $file = $files->current();
@@ -60,12 +72,12 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
         $this->getFiles()->next();
     }
 
-    public function key(): mixed
+    public function key()
     {
         return $this->getFiles()->key();
     }
 
-    public function valid(): bool
+    public function valid()
     {
         return $this->getFiles()->valid();
     }
@@ -75,23 +87,23 @@ class ThreeQVideoAssetProxyQueryResult implements AssetProxyQueryResultInterface
         $this->getFiles()->rewind();
     }
 
-    public function offsetExists(mixed $offset): bool
+    public function offsetExists($offset)
     {
         return $this->getFiles()->offsetExists($offset);
     }
 
-    public function offsetGet(mixed $offset): ?ThreeQVideoAssetProxy
+    public function offsetGet($offset)
     {
         $file = $this->getFiles()->offsetGet($offset);
         return $file !== null ? ThreeQVideoAssetProxy::fromFile($file, $this->query->getAssetSource()) : null;
     }
 
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function offsetSet($offset, $value)
     {
         $this->getFiles()->offsetSet($offset, $value);
     }
 
-    public function offsetUnset(mixed $offset): void
+    public function offsetUnset($offset)
     {
         $this->getFiles()->offsetUnset($offset);
     }

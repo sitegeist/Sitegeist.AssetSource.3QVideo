@@ -14,10 +14,25 @@ use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOriginalInterface, SupportsIptcMetadataInterface
 {
 
-    private ThreeQVideoAssetSource $assetSource;
-    private File $file;
-    private array $iptcProperties = [];
-    private ?string $localAssetIdentifier = null;
+    /**
+     * @var ThreeQVideoAssetSource
+     */
+    private $assetSource;
+
+    /**
+     * @var File
+     */
+    private $file;
+
+    /**
+     * @var array
+     */
+    private $iptcProperties = [];
+
+    /**
+     * @var string|null
+     */
+    private $localAssetIdentifier = null;
 
     protected function __construct(File $file, ThreeQVideoAssetSource $assetSource)
     {
@@ -27,7 +42,7 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
 
     public static function fromFile(File $file, ThreeQVideoAssetSource $assetSource): self
     {
-        $assetProxy = new self($file, $assetSource);
+        $assetProxy = new static($file, $assetSource);
 
         $assetProxy->iptcProperties['Title'] = $file->metadata['Title'] ?? '';
         $assetProxy->iptcProperties['CaptionAbstract'] = $file->metadata['Description'] ?? '';
@@ -69,7 +84,7 @@ final class ThreeQVideoAssetProxy implements AssetProxyInterface, HasRemoteOrigi
 
     public function getMediaType(): string
     {
-        return $this->file->mimetype;
+        return 'video/3q';
     }
 
     public function getWidthInPixels(): ?int

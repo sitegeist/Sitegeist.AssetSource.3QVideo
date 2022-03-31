@@ -13,11 +13,20 @@ use Sitegeist\AssetSource\ThreeQVideo\ValueObject\Playouts;
 
 class ThreeQVideoClient
 {
+    /**
+     * @var string
+     */
+    private $apiKey;
 
-    private string $apiKey;
-    private string $projectId;
+    /**
+     * @var string
+     */
+    private $projectId;
 
-    protected ?Client $client = null;
+    /**
+     * @var Client|null
+     */
+    protected $client = null;
 
     /**
      * @var LoggerInterface

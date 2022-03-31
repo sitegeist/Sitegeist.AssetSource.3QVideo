@@ -1,61 +1,43 @@
-prototype(Sitegeist.AssetSource.3QVideo:VideoPlayer) < prototype(Neos.Neos:ContentComponent) {
+prototype(Sitegeist.AssetSource.3QVideo:VideoPlayer) < prototype(Neos.Fusion:Component) {
+    playoutId = null
+    playerId = null
 
-  asset = ${q(node).property('file')}
+    muted = null
+    autoplay = null
+    loop = null
+    controls = null
 
-  class = null
+    renderer = Neos.Fusion:Component {
+        playerId = ${props.playerId}
+        configuration = Neos.Fusion:DataStructure {
+            dataid = ${props.playoutId}
 
-  renderer = Sitegeist.AssetSource.3QVideo:VideoPlayer.Presentation {
-    playoutId = ${Json.parse(Asset.readResource(props.asset.resource.stream)).playoutId}
-    playerId = ${'video-' + node.identifier}
+            container = ${props.playerId}
 
-    muted = ${props.muted ? props.muted :  true}
-    autoplay = ${props.autoplay ? props.autoplay : false}
-    loop = ${props.loop ? props.loop : false}
-    controls = ${props.controls ? props.controls : true}
+            muted = ${props.muted ? props.muted :  true}
+            autoplay = ${props.autoplay ? props.autoplay : false}
+            loop = ${props.loop ? props.loop : false}
+            controls = ${props.controls ? props.controls : true}
 
-  }
-}
+            width = '100%'
+            height = '100%'
+            layout = 'fixed'
 
-prototype(Sitegeist.AssetSource.3QVideo:VideoPlayer.Presentation) < prototype(Neos.Fusion:Component) {
-  playoutId = null
-  playerId = null
+            controlBarAutoHide = true
+            allowmutedautoplay = true
+        }
 
-  muted = null
-  autoplay = null
-  loop = null
-  controls = null
-
-  renderer = Neos.Fusion:Component {
-    playerId = ${props.playerId}
-    configuration = Neos.Fusion:DataStructure {
-      dataid = ${props.playoutId}
-
-      container = ${props.playerId}
-
-      muted = ${props.muted ? props.muted :  true}
-      autoplay = ${props.autoplay ? props.autoplay : false}
-      loop = ${props.loop ? props.loop : false}
-      controls = ${props.controls ? props.controls : true}
-
-      width = '100%'
-      height = '100%'
-      layout = 'fixed'
-
-      controlBarAutoHide = true
-      allowmutedautoplay = true
+        renderer = afx`
+            <div class={props.class}>
+                <script
+                    type="text/javascript"
+                    src="https://player.3qsdn.com/js3q.latest.js">
+                </script>
+                <div id={props.playerId}></div>
+                <script type="text/javascript">
+                    var js3qVideoPlayer = new js3q({Json.stringify(props.configuration)});
+                </script>
+            </div>
+        `
     }
-
-    renderer = afx`
-       <div class={props.class}>
-           <script
-             type="text/javascript"
-             src="https://player.3qsdn.com/js3q.latest.js">
-           </script>
-           <div id={props.playerId}></div>
-           <script type="text/javascript">
-             var js3qVideoPlayer = new js3q({Json.stringify(props.configuration)});
-           </script>
-       </div>
-    `
-  }
 }

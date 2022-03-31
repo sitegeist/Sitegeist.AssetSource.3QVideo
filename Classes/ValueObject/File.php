@@ -12,16 +12,55 @@ use Psr\Http\Message\UriInterface;
  */
 class File implements \JsonSerializable
 {
-    public int $id;
-    public string $filename;
-    public int $filesize;
-    public UriInterface $url;
-    public ?UriInterface $thumbnailUrl;
-    public ?UriInterface $previewUrl;
-    public string $mimetype;
-    public array $metadata;
-    public \DateTimeImmutable $creationDate;
-    public \DateTimeImmutable $modificationDate;
+    /**
+     * @var int
+     */
+    public $id;
+
+    /**
+     * @var string
+     */
+    public $filename;
+
+    /**
+     * @var int
+     */
+    public $filesize;
+
+    /**
+     * @var UriInterface
+     */
+    public $url;
+
+    /**
+     * @var UriInterface|null
+     */
+    public $thumbnailUrl;
+
+    /**
+     * @var UriInterface|null
+     */
+    public $previewUrl;
+
+    /**
+     * @var string
+     */
+    public $mimetype;
+
+    /**
+     * @var array
+     */
+    public $metadata;
+
+    /**
+     * @var \DateTimeImmutable
+     */
+    public $creationDate;
+
+    /**
+     * @var \DateTimeImmutable
+     */
+    public $modificationDate;
 
     private function __construct(int $id, string $filename, int $filesize, UriInterface $url, ?UriInterface $thumbnailUrl, ?UriInterface $previewUrl, string $mimetype, array $metadata, \DateTimeImmutable $creationDate, \DateTimeImmutable $modificationDate)
     {
