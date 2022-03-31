@@ -1,7 +1,8 @@
 {
-    "description": "",
+    "description": "Neos Asset Source for 3Q Videos",
     "type": "neos-package",
     "name": "sitegeist/assetsource-3qvideo",
+    "license": "GPL-3.0-or-later",
     "require": {
         "neos/neos": "^7.0 || ^8.0 || dev-master"
     },

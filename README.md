@@ -1,6 +1,16 @@
 # Sitegeist.AssetSource.3QVideo
 
-Asset Source for 3QVideo
+A Neos Asset Source for 3QVideo, the videos are not actually imported once selected. 
+Instead a metafile is created with just the metadata needed for rendering a player.
+
+## Authors & Sponsors
+
+* Søren Malling - soren@meteko.dk
+* Martin Ficzel - ficzel@sitegeist.de
+
+*The development and the public-releases of this package is generously sponsored
+by http://www.sitegeist.de.*
+
 
 ## Setup
 
