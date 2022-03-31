@@ -1,11 +1,11 @@
 # Sitegeist.AssetSource.3QVideo
 
-A Neos Asset Source for 3QVideo, the videos are not actually imported once selected. 
+A Neos Asset Source for 3QVideo (https://3q.video/). The videos are not actually imported once selected. 
 Instead a metafile is created with just the metadata needed for rendering a player.
 
 ## Authors & Sponsors
 
-* Søren Malling - soren@meteko.dk
+* Søren Malling - soren@websupply.dk
 * Martin Ficzel - ficzel@sitegeist.de
 
 *The development and the public-releases of this package is generously sponsored
@@ -68,4 +68,4 @@ prototype(Vendor.Site:Content.3QVideo) < prototype(Neos.Neos:ContentComponent) {
 ```
 
 ## Acknowledgements
-Inspired by the format of @bwaidelich  and the [Pimcore Asset source](https://github.com/bwaidelich/Wwwision.Neos.AssetSource.Pimcore/)
+Inspired by the format of @bwaidelich and the [Pimcore Asset source](https://github.com/bwaidelich/Wwwision.Neos.AssetSource.Pimcore/)
