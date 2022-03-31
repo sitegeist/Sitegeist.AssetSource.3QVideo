@@ -3,7 +3,7 @@
     "type": "neos-package",
     "name": "sitegeist/assetsource-3qvideo",
     "require": {
-        "neos/neos": "*"
+        "neos/neos": "^7.0 || ^8.0 || dev-master"
     },
     "autoload": {
         "psr-4": {
