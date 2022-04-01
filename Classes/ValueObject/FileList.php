@@ -24,7 +24,7 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
      */
     private $position = 0;
 
-    public function __construct(array $files)
+    public function __construct(File ...$files)
     {
         $this->files = $files;
         $this->count = count($files);
@@ -38,7 +38,7 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
             },
             $result['Files']
         );
-        return new self(array_values($files));
+        return new self(...$files);
     }
 
     public static function empty(): self
@@ -48,7 +48,7 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
 
     public static function fromArray(array $files): self
     {
-        return new self(array_values($files));
+        return new self(...$files);
     }
 
     public function count(): int

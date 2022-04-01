@@ -16,7 +16,7 @@ class Playouts
      */
     protected $playouts = [];
 
-    protected function __construct(array $playouts)
+    protected function __construct(Playout ...$playouts)
     {
         $this->playouts = $playouts;
     }
@@ -29,12 +29,13 @@ class Playouts
             },
             $result['FilePlayouts']
         );
-        return new self(array_values($playouts));
+        return new self(...$playouts);
     }
 
     public function first(): ?Playout
     {
-        return $this->getPlayouts()->first();
+        $first = $this->getPlayouts()->first();
+        return ($first instanceof Playout) ? $first : null;
     }
 
     public function getPlayouts(): ArrayCollection
