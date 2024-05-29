@@ -94,6 +94,27 @@ class File implements \JsonSerializable
         );
     }
 
+    public static function tryFromApiResult(array $result): ?self
+    {
+        $url = new Uri();
+        $metadata = $result['Metadata'];
+        if (empty($result['Properties']['VideoFormat'])) {
+            return null;
+        }
+        return new self(
+            (int)$result['Id'],
+            $metadata['OriginalFileName'],
+            (int) $result['Properties']['Size'],
+            $url,
+            $metadata['StandardFilePicture'] ? new Uri($metadata['StandardFilePicture']['URI']) : null,
+            $metadata['StandardFilePicture'] ? new Uri($metadata['StandardFilePicture']['URI']) : null,
+            'video/3q',
+            $metadata,
+            new \DateTimeImmutable((string)$result['CreatedAt']),
+            new \DateTimeImmutable((string)$result['LastUpdateAt'])
+        );
+    }
+
     public function jsonSerialize(): mixed
     {
         return [
