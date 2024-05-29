@@ -34,10 +34,11 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
     {
         $files = array_map(
             function(array $file) {
-                return File::fromApiResult($file);
+                return File::tryFromApiResult($file);
             },
             $result['Files']
         );
+        $files = array_filter($files);
         return new self(...$files);
     }
 
