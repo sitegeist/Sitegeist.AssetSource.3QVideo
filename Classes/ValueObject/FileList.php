@@ -24,10 +24,10 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
      */
     private $position = 0;
 
-    public function __construct(File ...$files)
+    public function __construct(int $count, File ...$files)
     {
         $this->files = $files;
-        $this->count = count($files);
+        $this->count = $count;
     }
 
     public static function fromApiResult(array $result): self
@@ -39,7 +39,7 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
             $result['Files']
         );
         $files = array_filter($files);
-        return new self(...$files);
+        return new self($result['TotalCount'] ?? 0, ...$files);
     }
 
     public static function empty(): self

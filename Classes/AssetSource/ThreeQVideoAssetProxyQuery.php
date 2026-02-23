@@ -36,9 +36,9 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
     private $orderings = [];
 
     /**
-     * @var FileList|null
+     * @var array<string, FileList>
      */
-    private $fileList = null;
+    private $fileList = [];
 
     public function __construct(ThreeQVideoAssetSource $assetSource)
     {
@@ -77,13 +77,14 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
 
     public function getSearchTerm()
     {
-        return $this->getSearchTerm();
+        return $this->searchTerm;
     }
 
     public function getFileList(): FileList
     {
-        if ($this->fileList === null) {
-            $files = $this->assetSource->getApiClient()->files();
+        $discriminator = $this->offset . "__" . $this->limit . '__' . $this->searchTerm;
+        if (!array_key_exists($discriminator, $this->fileList)) {
+            $files = $this->assetSource->getApiClient()->files($this->offset, $this->limit);
             if ($this->searchTerm !== '') {
                 $files = FileList::fromArray(
                     array_filter(
@@ -94,9 +95,9 @@ class ThreeQVideoAssetProxyQuery implements AssetProxyQueryInterface
                     )
                 );
             }
-            $this->fileList = $files;
+            $this->fileList[$discriminator] = $files;
         }
-        return $this->fileList;
+        return $this->fileList[$discriminator];
     }
 
     public function execute(): AssetProxyQueryResultInterface
