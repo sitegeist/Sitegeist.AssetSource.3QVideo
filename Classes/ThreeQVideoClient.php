@@ -76,14 +76,13 @@ class ThreeQVideoClient
         }
     }
 
-    public function files(): FileList
+    public function files(int $offset = 0, int $limit = 25): FileList
     {
         try {
             $response = $this->getClient()->get(
-                sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files?IncludeMetadata=true&IncludeProperties=true', $this->projectId)
+                sprintf('https://sdn.3qsdn.com/api/v2/projects/%s/files?IncludeMetadata=true&IncludeProperties=true&Offset=%d&Limit=%d', $this->projectId, $offset, $limit)
             );
             $result = json_decode($response->getBody()->getContents(), true);
-
             return FileList::fromApiResult($result);
         } catch (GuzzleException $exception) {
             $this->logger->error(
