@@ -49,7 +49,7 @@ class FileList implements \Iterator, \ArrayAccess, \Countable
 
     public static function fromArray(array $files): self
     {
-        return new self(...$files);
+        return new self(count($files), ...$files);
     }
 
     public function count(): int
